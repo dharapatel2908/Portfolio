@@ -1,0 +1,36 @@
+{
+  "name": "dhara-patel-portfolio",
+  "version": "1.0.0",
+  "description": "Dhara Patel's professional portfolio - Graduate Student & Software Developer specializing in Machine Learning and Robotics",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000",
+    "dev": "live-server --port=8000"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "software",
+    "machine-learning",
+    "robotics",
+    "python",
+    "ros",
+    "ucsd",
+    "graduate-student"
+  ],
+  "author": "Dhara Patel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhara-patel/portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dhara-patel/portfolio/issues"
+  },
+  "homepage": "https://dhara-patel.github.io/portfolio",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  }
+} 
