@@ -21,8 +21,6 @@ It highlights my work in deep learning, computer vision, and autonomous systems 
 - GitHub Pages  
 
 ## Featured Projects 🚀
-## 🚀 Featured Projects
-
 ### Multi-Agent SLAM System (Research)
 Developed a distributed Gaussian variational inference algorithm for multi-agent SLAM, improving mapping accuracy by **15%** in real-time robotic systems.  
 **Technologies:** Python, ROS, SLAM
