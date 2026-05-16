@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dhara Patel — AI & Robotics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#06040f;--bg2:#0e0920;--bg3:#130d28;
+  --purple:#a855f7;--purple2:#7c3aed;
+  --amber:#fbbf24;--pink:#f472b6;
+  --text:#f0eeff;--muted:#7c709a;
+  --border:rgba(168,85,247,0.12);
+  --card:rgba(168,85,247,0.04);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden}
+
+/* PROGRESS BAR */
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--amber));z-index:9999;width:0%;transition:width .1s linear}
+
+/* CANVAS */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.45}
+
+/* ORBS */
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:1}
+.orb1{width:420px;height:420px;background:radial-gradient(circle,rgba(168,85,247,.14),transparent 70%);top:-120px;right:-80px;animation:orb1 14s ease-in-out infinite}
+.orb2{width:320px;height:320px;background:radial-gradient(circle,rgba(251,191,36,.09),transparent 70%);bottom:5%;left:-80px;animation:orb2 16s ease-in-out infinite}
+.orb3{width:260px;height:260px;background:radial-gradient(circle,rgba(244,114,182,.09),transparent 70%);top:55%;right:8%;animation:orb3 18s ease-in-out infinite}
+@keyframes orb1{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,-25px)}66%{transform:translate(-15px,20px)}}
+@keyframes orb2{0%,100%{transform:translate(0,0)}33%{transform:translate(-20px,30px)}66%{transform:translate(25px,-20px)}}
+@keyframes orb3{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,25px)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2.5rem;background:rgba(6,4,15,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:padding .3s}
+nav.slim{padding:.7rem 2.5rem}
+.logo{font-size:20px;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-.03em;display:flex;align-items:center}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--amber));display:inline-block;margin-left:4px;animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+.nav-links{display:flex;gap:.2rem;list-style:none;align-items:center}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:.4rem .95rem;border-radius:7px;transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--purple);background:rgba(168,85,247,.08)}
+.nav-cta{background:linear-gradient(135deg,var(--purple),var(--purple2))!important;color:#fff!important;font-weight:700!important;border-radius:9px!important}
+.nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8rem 2.5rem 5rem;text-align:center;z-index:2}
+.hero-inner{max-width:840px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.07);padding:.45rem 1.1rem;border-radius:100px;margin-bottom:2rem;animation:fsu .8s ease both}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero h1{font-size:clamp(2.8rem,6vw,5.5rem);font-weight:900;line-height:1.05;letter-spacing:-.04em;margin-bottom:1.5rem;animation:fsu .9s ease .2s both}
+.hero h1 span{display:block}
+.grad-text{background:linear-gradient(135deg,var(--purple) 15%,var(--pink) 55%,var(--amber) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--muted);line-height:1.8;max-width:620px;margin:0 auto 2rem;animation:fsu .9s ease .4s both}
+.hero-sub strong{color:var(--text);font-weight:600}
+.tw-wrap{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--purple);background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);padding:.6rem 1.2rem;border-radius:8px;display:inline-block;margin-bottom:2.5rem;animation:fsu .9s ease .5s both}
+#tw{color:var(--text)}
+.cur{display:inline-block;width:2px;height:1em;background:var(--purple);margin-left:2px;vertical-align:text-bottom;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fsu .9s ease .6s both}
+@keyframes fsu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fsd{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.btn-p{font-size:14px;font-weight:700;color:#0e0920;background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;padding:.85rem 2.2rem;border-radius:10px;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 24px rgba(168,85,247,.35)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(168,85,247,.5)}
+.btn-g{font-size:14px;font-weight:600;color:var(--text);background:transparent;border:1px solid rgba(255,255,255,.12);padding:.85rem 2.2rem;border-radius:10px;text-decoration:none;display:inline-block;transition:border-color .2s,color .2s,background .2s}
+.btn-g:hover{border-color:rgba(168,85,247,.5);color:var(--purple);background:rgba(168,85,247,.06)}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;animation:fsu 1s ease 1.2s both}
+.scroll-hint span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.scroll-track{width:1px;height:48px;background:rgba(168,85,247,.15);position:relative;overflow:hidden;border-radius:1px}
+.scroll-thumb{position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,var(--purple),transparent);animation:sdown 2s ease-in-out infinite}
+@keyframes sdown{0%{transform:translateY(-100%)}100%{transform:translateY(200%)}  }
+
+/* LAYOUT */
+.section-wrap{position:relative;z-index:2}
+section{max-width:1180px;margin:0 auto;padding:6rem 2.5rem}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);margin-bottom:.6rem;display:flex;align-items:center;gap:10px}
+.sec-label::before{content:'';width:24px;height:1px;background:linear-gradient(90deg,var(--purple),transparent)}
+h2.sec-title{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:.9rem}
+.sec-desc{color:var(--muted);max-width:540px;margin-bottom:3.5rem;font-size:15.5px}
+.divider{position:relative;z-index:2;height:1px;background:linear-gradient(90deg,transparent,rgba(168,85,247,.2),rgba(251,191,36,.15),transparent);margin:0 2.5rem}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:5rem;align-items:center}
+.about-text p{color:var(--muted);line-height:1.9;margin-bottom:1.2rem;font-size:15.5px}
+.about-text p strong{color:var(--text);font-weight:600}
+.about-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.25rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.stat:hover{border-color:rgba(168,85,247,.35);transform:translateY(-3px)}
+.stat::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(168,85,247,.1),transparent 70%);opacity:0;transition:opacity .4s}
+.stat:hover::before{opacity:1}
+.stat-n{font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:.3rem;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:12px;color:var(--muted);line-height:1.4}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.25rem}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;display:flex;flex-direction:column;gap:1rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s}
+.proj-card::before{content:'';position:absolute;inset:0;background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(168,85,247,.08),transparent 50%);opacity:0;transition:opacity .5s;pointer-events:none}
+.proj-card:hover::before{opacity:1}
+.proj-card:hover{border-color:rgba(168,85,247,.3);transform:translateY(-4px);box-shadow:0 16px 48px rgba(168,85,247,.12)}
+.proj-card.feat{border-color:rgba(168,85,247,.22);background:linear-gradient(135deg,rgba(168,85,247,.06),rgba(124,58,237,.03))}
+.proj-card.feat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--pink),var(--amber));border-radius:14px 14px 0 0}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+.card-ico{font-size:22px;width:44px;height:44px;border-radius:10px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.bdg{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .65rem;border-radius:5px;white-space:nowrap}
+.bv{color:var(--purple);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25)}
+.ba{color:var(--amber);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2)}
+.bp{color:var(--pink);background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.2)}
+.bg{color:#4ade80;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)}
+.bb{color:#60a5fa;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2)}
+.card-title{font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
+.card-desc{font-size:13.5px;color:var(--muted);line-height:1.75;flex:1}
+.card-desc strong{color:var(--text);font-weight:600}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:.2rem .7rem;border-radius:5px;letter-spacing:.03em;transition:color .2s,border-color .2s}
+.proj-card:hover .tag{border-color:rgba(168,85,247,.15)}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.25rem}
+.sg{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:border-color .3s,transform .3s}
+.sg:hover{border-color:rgba(168,85,247,.3);transform:translateY(-2px)}
+.sg-head{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1.1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border)}
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{font-size:12.5px;font-weight:500;color:var(--text);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:.28rem .85rem;border-radius:100px;transition:all .2s;cursor:default}
+.pill:hover{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.35);color:var(--purple);transform:scale(1.04)}
+
+/* PUBLICATIONS */
+.pub-list{display:flex;flex-direction:column;gap:1.25rem}
+.pub{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem 2rem;display:flex;gap:1.75rem;align-items:flex-start;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.pub::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--purple),var(--pink));border-radius:14px 0 0 14px}
+.pub:hover{border-color:rgba(168,85,247,.3);transform:translateX(5px)}
+.pub-n{font-size:3rem;font-weight:900;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:1px rgba(168,85,247,.3);min-width:2.5rem;flex-shrink:0}
+.pub-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:.5rem}
+.pub-desc{font-size:13.5px;color:var(--muted);line-height:1.75;margin-bottom:.75rem}
+.pub-meta{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--purple);background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);display:inline-block;padding:.25rem .75rem;border-radius:5px;letter-spacing:.06em}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.c-intro p{color:var(--muted);line-height:1.85;margin-bottom:.75rem;font-size:15.5px}
+.c-intro strong{color:var(--text);font-weight:600}
+.c-links{display:flex;flex-direction:column;gap:.9rem;margin-top:2rem}
+.c-link{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:var(--text);position:relative;overflow:hidden;transition:border-color .25s,transform .25s,box-shadow .25s}
+.c-link::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(168,85,247,.07),transparent);opacity:0;transition:opacity .3s}
+.c-link:hover{border-color:rgba(168,85,247,.35);transform:translateX(5px);box-shadow:0 4px 20px rgba(168,85,247,.1)}
+.c-link:hover::before{opacity:1}
+.c-ico{width:38px;height:38px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.c-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:2px}
+.c-val{font-size:13.5px;color:var(--text);font-weight:500}
+.c-arr{color:var(--muted);margin-left:auto;transition:transform .2s,color .2s}
+.c-link:hover .c-arr{transform:translateX(3px);color:var(--purple)}
+.open-box{background:linear-gradient(135deg,rgba(168,85,247,.06),rgba(124,58,237,.03));border:1px solid rgba(168,85,247,.2);border-radius:14px;padding:1.75rem}
+.open-title{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1.2rem}
+.open-item{display:flex;align-items:center;gap:10px;padding:.6rem 0;font-size:13.5px;color:var(--text);font-weight:500;border-bottom:1px solid var(--border)}
+.open-item:last-child{border-bottom:none}
+.odot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--purple),var(--pink))}
+.loc-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;text-align:center;margin-top:1.25rem}
+.loc-tag{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--amber);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);padding:.35rem .9rem;border-radius:100px;margin-bottom:1.1rem;font-weight:600;letter-spacing:.06em}
+
+/* INTERESTS */
+.interests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem}
+.interest-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:1.75rem 1.5rem;display:flex;flex-direction:column;align-items:center;
+  text-align:center;gap:1rem;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s,box-shadow .3s;cursor:default;
+}
+.interest-card::before{
+  content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;
+  background:radial-gradient(circle at 50% 0%,var(--ic-glow,rgba(168,85,247,.12)),transparent 65%);
+}
+.interest-card:hover::before{opacity:1}
+.interest-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.3);border-color:var(--ic-border,rgba(168,85,247,.35))}
+.interest-emoji{
+  font-size:2.8rem;line-height:1;
+  filter:drop-shadow(0 0 12px var(--ic-shadow,rgba(168,85,247,.4)));
+  animation:float 4s ease-in-out infinite;
+  animation-delay:var(--ic-delay,0s);
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.interest-name{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.interest-desc{font-size:12.5px;color:var(--muted);line-height:1.6}
+.interest-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:.25rem .75rem;border-radius:100px;
+  background:var(--ic-tagbg,rgba(168,85,247,.1));
+  border:1px solid var(--ic-tagborder,rgba(168,85,247,.25));
+  color:var(--ic-tagcolor,var(--purple));
+  margin-top:auto;
+}
+
+/* FOOTER */
+footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(6,4,15,.8)}
+footer p{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.04em}
+.foot-links{display:flex;gap:1.5rem}
+.foot-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .2s}
+.foot-links a:hover{color:var(--purple)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.rv.fl{transform:translateX(-30px)}
+.rv.fr{transform:translateX(30px)}
+.rv.vis{opacity:1;transform:translate(0,0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.6s}
+
+@media(max-width:768px){
+  nav{padding:.9rem 1.25rem}
+  .nav-links{display:none}
+  .hero,.section{padding-left:1.25rem;padding-right:1.25rem}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem}
+  .divider{margin:0 1.25rem}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+  .pub{flex-direction:column;gap:.75rem}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<canvas id="stars"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="#">Dhara Patel<span class="logo-dot"></span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#publications">Research</a></li>
+    <li><a href="#interests">Beyond Code</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="badge-dot"></span>Open to Full-Time Opportunities</div>
+    <h1>
+      <span>Building Intelligent</span>
+      <span class="grad-text">Autonomous Systems</span>
+    </h1>
+    <p class="hero-sub">
+      M.S. Mechanical Engineering (Robotics) · UC San Diego<br/>
+      Researching <strong>MPPI, multi-agent SLAM</strong> &amp; <strong>safe probabilistic planning</strong>
+      at the MURO Lab — making robots trustworthy in the real world.
+    </p>
+    <div class="tw-wrap">$ dhara --focus <span id="tw"></span><span class="cur"></span></div>
+    <div class="hero-btns">
+      <a class="btn-p" href="#projects">View Projects</a>
+      <a class="btn-g" href="https://github.com/dharapatel2908" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn-g" href="https://dharapatel2908.github.io/Portfolio" target="_blank" rel="noopener">Live Site ↗</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-track"><div class="scroll-thumb"></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<div class="section-wrap">
+<section id="about">
+  <div class="sec-label">01 · About</div>
+  <h2 class="sec-title">Engineer. Researcher. Builder.</h2>
+  <div class="about-grid">
+    <div class="about-text rv fl">
+      <p>I'm a graduate student at <strong>UC San Diego</strong>, working at the intersection of probabilistic robotics, control theory, and machine learning. My research in the <strong>MURO Lab</strong> focuses on <strong>Model Predictive Path Integral (MPPI) control</strong> and <strong>Distributed Gaussian Variational Inference (DGVI)</strong> for safe, real-time multi-agent systems.</p>
+      <p>My dual background in <strong>Computer Science</strong> and <strong>Mechanical Engineering</strong> gives me a unique lens for tackling problems in autonomous vehicles, robot navigation, and AI-driven safety — bridging theory and real-world deployment.</p>
+      <p>Actively seeking roles in <strong>autonomy &amp; AV validation</strong>, AI engineering, and robotics software where I can push the boundaries of trustworthy autonomous systems.</p>
+      <div class="about-btns">
+        <a class="btn-p" href="mailto:dpatel20891@gmail.com">Get in Touch</a>
+        <a class="btn-g" href="https://dharapatel2908.github.io/Portfolio" target="_blank" rel="noopener">Portfolio ↗</a>
+      </div>
+    </div>
+    <div class="stats-grid rv fr">
+      <div class="stat d1"><div class="stat-n" data-count="2">0</div><div class="stat-l">Published Research Papers</div></div>
+      <div class="stat d2"><div class="stat-n" data-count="15" data-sfx="%">0%</div><div class="stat-l">SLAM accuracy gain via DGVI</div></div>
+      <div class="stat d3"><div class="stat-n" data-count="90" data-sfx="%">0%</div><div class="stat-l">Accuracy — Medical PDF Extraction</div></div>
+      <div class="stat d4"><div class="stat-n" data-count="60" data-sfx="%">0%</div><div class="stat-l">Review time reduced — Chatbot NLP</div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<div class="section-wrap">
+<section id="projects">
+  <div class="sec-label">02 · Projects</div>
+  <h2 class="sec-title">Featured Work</h2>
+  <p class="sec-desc">12 projects spanning robotics, generative AI, computer vision, and autonomous systems.</p>
+  <div class="proj-grid">
+
+    <div class="proj-card feat rv">
+      <div class="card-top"><div class="card-ico">🤖</div><div class="badges"><span class="bdg bv">Research</span><span class="bdg ba">MURO Lab</span></div></div>
+      <div class="card-title">Multi-Agent SLAM System</div>
+      <p class="card-desc">Developed a <strong>Distributed Gaussian Variational Inference (DGVI)</strong> algorithm for multi-agent SLAM, achieving a <strong>15% improvement</strong> in real-time mapping accuracy across robotic systems.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">ROS2</span><span class="tag">SLAM</span><span class="tag">DGVI</span><span class="tag">Gazebo</span></div>
+    </div>
+
+    <div class="proj-card feat rv d1">
+      <div class="card-top"><div class="card-ico">🚗</div><div class="badges"><span class="bdg bg">AV / MPPI</span></div></div>
+      <div class="card-title">SimDrive</div>
+      <p class="card-desc">MPPI-based autonomous vehicle simulation in <strong>CARLA</strong>. Real-time trajectory optimization for complex urban driving with dynamic obstacles and sensor noise models.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">CARLA</span><span class="tag">MPPI</span><span class="tag">C++</span><span class="tag">ROS2</span></div>
+    </div>
+
+    <div class="proj-card rv d2">
+      <div class="card-top"><div class="card-ico">🛡️</div><div class="badges"><span class="bdg bp">Safe RL</span></div></div>
+      <div class="card-title">SafeRL-Drive</div>
+      <p class="card-desc">Safety-constrained RL policy evaluation framework integrating <strong>CBF-inspired constraints</strong> with RL policies to enforce real-time safety guarantees during exploration and deployment.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">Safe RL</span><span class="tag">CBF</span><span class="tag">Gym</span></div>
+    </div>
+
+    <div class="proj-card rv d3">
+      <div class="card-top"><div class="card-ico">🧭</div><div class="badges"><span class="bdg bb">LLM + Robotics</span></div></div>
+      <div class="card-title">NavAgent</div>
+      <p class="card-desc">LLM-guided robot navigation on <strong>ROS2 &amp; LangChain</strong>. Natural language commands parsed by an LLM and translated into Nav2 goals for intuitive human-robot interaction.</p>
+      <div class="card-tags"><span class="tag">ROS2</span><span class="tag">LangChain</span><span class="tag">Nav2</span><span class="tag">Python</span><span class="tag">LLM</span></div>
+    </div>
+
+    <div class="proj-card rv d4">
+      <div class="card-top"><div class="card-ico">🕸️</div><div class="badges"><span class="bdg bv">Research</span></div></div>
+      <div class="card-title">MultiSim</div>
+      <p class="card-desc">Multi-robot coordination testbed in <strong>Gazebo</strong> for testing decentralized planning algorithms, communication protocols, and distributed SLAM across heterogeneous robot fleets.</p>
+      <div class="card-tags"><span class="tag">Gazebo</span><span class="tag">ROS2</span><span class="tag">Python</span><span class="tag">C++</span><span class="tag">Multi-Agent</span></div>
+    </div>
+
+    <div class="proj-card rv d5">
+      <div class="card-top"><div class="card-ico">🗺️</div><div class="badges"><span class="bdg bg">SLAM</span></div></div>
+      <div class="card-title">VI-SLAM</div>
+      <p class="card-desc">Visual-inertial SLAM fusing monocular camera and IMU via <strong>EKF-based orientation tracking</strong>. Robust 6-DoF pose estimation in GPS-denied environments with full uncertainty propagation.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">C++</span><span class="tag">EKF</span><span class="tag">IMU Fusion</span><span class="tag">OpenCV</span></div>
+    </div>
+
+    <div class="proj-card rv">
+      <div class="card-top"><div class="card-ico">📡</div><div class="badges"><span class="bdg bb">Perception</span></div></div>
+      <div class="card-title">LiDAR Point Cloud Pipeline</div>
+      <p class="card-desc">End-to-end 3D point cloud pipeline: ground segmentation, object clustering, bounding box estimation, and <strong>RViz</strong> visualization integrated with Nav2 obstacle avoidance.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">PCL</span><span class="tag">ROS2</span><span class="tag">RViz</span><span class="tag">LiDAR</span></div>
+    </div>
+
+    <div class="proj-card rv d1">
+      <div class="card-top"><div class="card-ico">✉️</div><div class="badges"><span class="bdg ba">AI / LLM</span></div></div>
+      <div class="card-title">Cold Email Generator</div>
+      <p class="card-desc">Automated outreach pipeline using <strong>LLAMA, LangChain &amp; ChromaDB</strong> for context-aware memory retrieval. Generates hyper-personalized emails at scale via semantic understanding.</p>
+      <div class="card-tags"><span class="tag">LLAMA</span><span class="tag">LangChain</span><span class="tag">ChromaDB</span><span class="tag">RAG</span></div>
+    </div>
+
+    <div class="proj-card rv d2">
+      <div class="card-top"><div class="card-ico">👤</div><div class="badges"><span class="bdg bp">Computer Vision</span></div></div>
+      <div class="card-title">Face Recognition System</div>
+      <p class="card-desc">Real-time employee authentication improving security by <strong>40%</strong> and reducing login time by <strong>50%</strong> versus manual workflows. Deployed in a production environment.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Deep Learning</span><span class="tag">YOLO</span></div>
+    </div>
+
+    <div class="proj-card rv d3">
+      <div class="card-top"><div class="card-ico">📄</div><div class="badges"><span class="bdg bg">ML / NLP</span></div></div>
+      <div class="card-title">Medical PDF Data Extraction</div>
+      <p class="card-desc">ML pipeline automating structured data extraction from unstructured medical PDFs. <strong>90% accuracy</strong> and a <strong>35% efficiency boost</strong> across clinical document workflows.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">NLTK</span><span class="tag">Scikit-learn</span><span class="tag">PDF Parsing</span></div>
+    </div>
+
+    <div class="proj-card rv d4">
+      <div class="card-top"><div class="card-ico">💬</div><div class="badges"><span class="bdg bb">NLP</span></div></div>
+      <div class="card-title">Chatbot &amp; Text Summarization</div>
+      <p class="card-desc">NLP chatbot and PDF summarizer via <strong>FastAPI</strong>, cutting manual document review time by <strong>60%</strong> through intelligent question-answering and abstractive summarization.</p>
+      <div class="card-tags"><span class="tag">Python</span><span class="tag">NLTK</span><span class="tag">FastAPI</span><span class="tag">Transformers</span></div>
+    </div>
+
+    <div class="proj-card rv d5">
+      <div class="card-top"><div class="card-ico">🔐</div><div class="badges"><span class="bdg bv">Research</span></div></div>
+      <div class="card-title">Voice Recognition Security</div>
+      <p class="card-desc">Published research on ML-based speaker verification — adversarial robustness, false-acceptance rate analysis, and deployment pipeline design for secure voice authentication systems.</p>
+      <div class="card-tags"><span class="tag">Machine Learning</span><span class="tag">Signal Processing</span><span class="tag">Security</span></div>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<div class="section-wrap">
+<section id="skills">
+  <div class="sec-label">03 · Skills</div>
+  <h2 class="sec-title">Tech Stack</h2>
+  <p class="sec-desc">Tools across robotics, machine learning, computer vision, and full-stack development.</p>
+  <div class="skills-grid">
+    <div class="sg rv"><div class="sg-head">⌨️ &nbsp;Languages</div><div class="pills"><span class="pill">Python</span><span class="pill">C++</span><span class="pill">Java</span><span class="pill">Bash</span></div></div>
+    <div class="sg rv d1"><div class="sg-head">🤖 &nbsp;Robotics &amp; Simulation</div><div class="pills"><span class="pill">ROS2</span><span class="pill">Gazebo</span><span class="pill">RViz</span><span class="pill">Nav2</span><span class="pill">MoveIt</span><span class="pill">SLAM</span></div></div>
+    <div class="sg rv d2"><div class="sg-head">🧠 &nbsp;ML &amp; AI</div><div class="pills"><span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">Scikit-learn</span><span class="pill">Transformers</span><span class="pill">LangChain</span><span class="pill">YOLO</span></div></div>
+    <div class="sg rv d3"><div class="sg-head">👁️ &nbsp;Computer Vision</div><div class="pills"><span class="pill">OpenCV</span><span class="pill">TorchVision</span><span class="pill">LiDAR</span><span class="pill">Sensor Fusion</span><span class="pill">PCL</span></div></div>
+    <div class="sg rv d4"><div class="sg-head">🛠️ &nbsp;Dev Tools &amp; Cloud</div><div class="pills"><span class="pill">Git</span><span class="pill">Docker</span><span class="pill">AWS</span><span class="pill">Linux</span><span class="pill">VS Code</span></div></div>
+    <div class="sg rv d5"><div class="sg-head">🔬 &nbsp;Research Areas</div><div class="pills"><span class="pill">MPPI</span><span class="pill">DGVI</span><span class="pill">EKF</span><span class="pill">Probabilistic Robotics</span><span class="pill">Safe RL</span><span class="pill">CBF</span></div></div>
+  </div>
+</section>
+</div>
+
+<div class="divider"></div>
+
+<!-- PUBLICATIONS -->
+<div class="section-wrap">
+<section id="publications">
+  <div class="sec-label">04 · Research</div>
+  <h2 class="sec-title">Publications</h2>
+  <p class="sec-desc">Peer-reviewed work on machine learning applications in security and affective computing.</p>
+  <div class="pub-list">
+    <div class="pub rv fl">
+      <div class="pub-n">01</div>
+      <div>
+        <div class="pub-title">Emotion Detection in Text Using Machine Learning</div>
+        <p class="pub-desc">Research on classifying emotional tone in natural language using supervised ML — applications in sentiment analysis, human-computer interaction, and mental health monitoring pipelines.</p>
+        <span class="pub-meta">IJNRD · Vol. 8, No. 10 · 2023</span>
+      </div>
+    </div>
+    <div class="pub rv fl d2">
+      <div class="pub-n">02</div>
+      <div>
+        <div class="pub-title">ML-Based Voice Recognition for Security Systems</div>
+        <p class="pub-desc">ML models for speaker verification and authentication — adversarial robustness, false-acceptance rate benchmarking, and real-world deployment constraints for secure voice authentication.</p>
+        <span class="pub-meta">JETIR · 2023</span>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<div class="section-wrap">
+<section id="contact">
+  <div class="sec-label">07 · Contact</div>
+  <h2 class="sec-title">Let's Connect</h2>
+  <div class="contact-grid">
+    <div class="c-intro rv fl">
+      <p>I'm actively looking for full-time roles in <strong>autonomy, robotics software, and AI engineering</strong>. If you're working on something ambitious — let's talk.</p>
+      <p>Based in <strong>San Diego, CA</strong> and open to relocation or remote opportunities.</p>
+      <div class="c-links">
+        <a class="c-link" href="mailto:dpatel20891@gmail.com"><div class="c-ico">✉️</div><div><div class="c-lbl">Email</div><div class="c-val">dpatel20891@gmail.com</div></div><span class="c-arr">→</span></a>
+        <a class="c-link" href="https://github.com/dharapatel2908" target="_blank" rel="noopener"><div class="c-ico">⌨️</div><div><div class="c-lbl">GitHub</div><div class="c-val">dharapatel2908</div></div><span class="c-arr">→</span></a>
+        <a class="c-link" href="https://www.linkedin.com/in/dhara-patel-b773b6206/" target="_blank" rel="noopener"><div class="c-ico">💼</div><div><div class="c-lbl">LinkedIn</div><div class="c-val">dhara-patel-b773b6206</div></div><span class="c-arr">→</span></a>
+        <a class="c-link" href="https://dharapatel2908.github.io/Portfolio" target="_blank" rel="noopener"><div class="c-ico">🌐</div><div><div class="c-lbl">Portfolio</div><div class="c-val">dharapatel2908.github.io/Portfolio</div></div><span class="c-arr">→</span></a>
+      </div>
+    </div>
+    <div class="rv fr">
+      <div class="open-box">
+        <div class="open-title">Open To</div>
+        <div class="open-item"><span class="odot"></span>Autonomy &amp; AV Validation Engineering</div>
+        <div class="open-item"><span class="odot"></span>Robotics Software Engineering</div>
+        <div class="open-item"><span class="odot"></span>AI / ML Engineering</div>
+        <div class="open-item"><span class="odot"></span>Full-Stack Engineering</div>
+        <div class="open-item"><span class="odot"></span>Research Scientist / Engineer</div>
+      </div>
+      <div class="loc-box">
+        <div class="loc-tag">📍 San Diego, CA</div>
+        <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.25rem">UC San Diego · MURO Lab</div>
+        <a class="btn-p" href="mailto:dpatel20891@gmail.com" style="font-size:13px;padding:.7rem 1.75rem">Send a Message →</a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="divider"></div>
+
+<!-- INTERESTS -->
+<div class="section-wrap">
+<section id="interests">
+  <div class="sec-label">06 · Beyond Code</div>
+  <h2 class="sec-title">Life Outside the Lab</h2>
+  <p class="sec-desc">Engineering is just one dimension. Here's what keeps me curious, creative, and energized.</p>
+  <div class="interests-grid">
+
+    <div class="interest-card rv"
+      style="--ic-glow:rgba(168,85,247,.15);--ic-border:rgba(168,85,247,.4);--ic-shadow:rgba(168,85,247,.5);--ic-tagbg:rgba(168,85,247,.1);--ic-tagborder:rgba(168,85,247,.25);--ic-tagcolor:var(--purple);--ic-delay:0s">
+      <div class="interest-emoji">🎹</div>
+      <div class="interest-name">Keyboard</div>
+      <p class="interest-desc">Exploring melodies, chord progressions, and the meditative rhythm of practicing scales. Music and math are more alike than you'd think.</p>
+      <span class="interest-tag">Playing</span>
+    </div>
+
+    <div class="interest-card rv d1"
+      style="--ic-glow:rgba(251,191,36,.12);--ic-border:rgba(251,191,36,.4);--ic-shadow:rgba(251,191,36,.5);--ic-tagbg:rgba(251,191,36,.08);--ic-tagborder:rgba(251,191,36,.25);--ic-tagcolor:var(--amber);--ic-delay:.4s">
+      <div class="interest-emoji">🎸</div>
+      <div class="interest-name">Guitar</div>
+      <p class="interest-desc">Strumming chords and slowly unlocking new techniques. Guitar teaches patience — the same patience that makes a great debugger.</p>
+      <span class="interest-tag">Learning</span>
+    </div>
+
+    <div class="interest-card rv d2"
+      style="--ic-glow:rgba(74,222,128,.12);--ic-border:rgba(74,222,128,.4);--ic-shadow:rgba(74,222,128,.5);--ic-tagbg:rgba(74,222,128,.08);--ic-tagborder:rgba(74,222,128,.25);--ic-tagcolor:#4ade80;--ic-delay:.8s">
+      <div class="interest-emoji">🏅</div>
+      <div class="interest-name">Sports</div>
+      <p class="interest-desc">Always ready to pick up a new sport — from badminton to swimming. I believe staying active sharpens thinking as much as it builds strength.</p>
+      <span class="interest-tag">Active Learner</span>
+    </div>
+
+    <div class="interest-card rv d3"
+      style="--ic-glow:rgba(244,114,182,.12);--ic-border:rgba(244,114,182,.4);--ic-shadow:rgba(244,114,182,.5);--ic-tagbg:rgba(244,114,182,.08);--ic-tagborder:rgba(244,114,182,.25);--ic-tagcolor:var(--pink);--ic-delay:1.2s">
+      <div class="interest-emoji">🎲</div>
+      <div class="interest-name">Board Games</div>
+      <p class="interest-desc">Strategy, bluffing, diplomacy, and the occasional Catan meltdown. Board games are where my love for multi-agent systems comes alive offline.</p>
+      <span class="interest-tag">Strategy & Fun</span>
+    </div>
+
+    <div class="interest-card rv d4"
+      style="--ic-glow:rgba(96,165,250,.12);--ic-border:rgba(96,165,250,.4);--ic-shadow:rgba(96,165,250,.5);--ic-tagbg:rgba(96,165,250,.08);--ic-tagborder:rgba(96,165,250,.25);--ic-tagcolor:#60a5fa;--ic-delay:1.6s">
+      <div class="interest-emoji">✈️</div>
+      <div class="interest-name">Travelling</div>
+      <p class="interest-desc">New cultures, unexpected conversations, and places that reframe how you see the world. Every trip is a dataset that updates my model of humanity.</p>
+      <span class="interest-tag">Explorer</span>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<footer>
+  <p>© 2025 Dhara Patel · MIT License · Deployed on GitHub Pages</p>
+  <div class="foot-links">
+    <a href="https://github.com/dharapatel2908" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://dharapatel2908.github.io/Portfolio" target="_blank" rel="noopener">Live Site</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+/* STARFIELD */
+(function(){
+  const c=document.getElementById('stars'),ctx=c.getContext('2d');
+  let S=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight}
+  function init(){
+    S=[];
+    const n=Math.floor(c.width*c.height/7000);
+    for(let i=0;i<n;i++) S.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.2+.2,o:Math.random()*.5+.1,tw:Math.random()*Math.PI*2,sp:Math.random()*.3+.04});
+  }
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    S.forEach(s=>{
+      s.tw+=s.sp*.05;
+      const op=s.o*(.6+.4*Math.sin(s.tw));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,180,255,${op})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();init();draw();
+  window.addEventListener('resize',()=>{resize();init()});
+})();
+
+/* PROGRESS */
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';
+},{passive:true});
+
+/* NAV */
+const nav=document.getElementById('nav');
+const secs=document.querySelectorAll('section[id]');
+const nls=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('slim',scrollY>60);
+  let cur='';
+  secs.forEach(s=>{if(scrollY>=s.offsetTop-160) cur=s.id});
+  nls.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur&&!a.classList.contains('nav-cta'))});
+},{passive:true});
+
+/* REVEAL */
+const rvObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');rvObs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+/* COUNTERS */
+function count(el){
+  const t=+el.dataset.count,sfx=el.dataset.sfx||'',dur=1500,s=performance.now();
+  (function step(now){
+    const p=Math.min((now-s)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(e*t)+sfx;
+    if(p<1) requestAnimationFrame(step);
+  })(s);
+}
+const cntObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-count]').forEach(count);cntObs.unobserve(e.target)}});
+},{threshold:.3});
+document.querySelectorAll('.stats-grid').forEach(el=>cntObs.observe(el));
+
+/* TYPEWRITER */
+(function(){
+  const el=document.getElementById('tw');
+  const P=['autonomous-vehicles','multi-agent-SLAM','safe-robot-planning','LLM-robotics','probabilistic-AI'];
+  let pi=0,ci=0,del=false,w=0;
+  function tick(){
+    if(w>0){w--;setTimeout(tick,80);return}
+    const p=P[pi];
+    if(!del){el.textContent=p.slice(0,++ci);if(ci===p.length){del=true;w=28}}
+    else{el.textContent=p.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%P.length;w=8}}
+    setTimeout(tick,del?44:82);
+  }
+  setTimeout(tick,1000);
+})();
+
+/* SPOTLIGHT */
+document.querySelectorAll('.proj-card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+    c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  });
+});
+
+/* MAGNETIC BUTTONS */
+document.querySelectorAll('.btn-p,.btn-g').forEach(b=>{
+  b.addEventListener('mousemove',e=>{
+    const r=b.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.1,y=(e.clientY-r.top-r.height/2)*.1;
+    b.style.transform=`translate(${x}px,${y}px) translateY(-1px)`;
+  });
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+});
+</script>
+</body>
+</html>
