@@ -1,4 +1,4 @@
-# Dhara Patel — Personal Portfolio Website 🌐
+# Dhara Patel: Personal Portfolio Website 🌐
 
 A personal portfolio website showcasing my projects, skills, and research in **Artificial Intelligence**, **Machine Learning**, and **Robotics**. Built as a single-file, zero-dependency HTML site and deployed via GitHub Pages.
 
